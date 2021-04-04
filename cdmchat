@@ -1,0 +1,13 @@
+#!/bin/zsh
+
+source modules/menu.sh
+source modules/message.sh
+
+first_run
+get_destination
+
+while true;
+do
+	send_message
+	main_menu
+done
