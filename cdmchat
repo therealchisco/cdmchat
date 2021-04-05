@@ -3,11 +3,15 @@
 source modules/menu.sh
 source modules/message.sh
 
-first_run
-get_destination
+function main_loop()
+{
+	while true;
+	do
+		send_message
+		main_menu
+	done
+}
 
-while true;
-do
-	send_message
-	main_menu
-done
+
+first_run
+main_loop
