@@ -26,17 +26,17 @@ function get_message()
 	indent_text "Message: "
 	read message
 	timestamp=$(date +"%H:%M:%S")
+	sleep 3
 }
 
 function format_message()
 {
-	sed -e "s/\$username/$username/" -e "s/\$timestamp/$timestamp/" -e "s/\$message/$message/" $TEMPLATE
+	sed -e "s=\$username=$username=" -e "s=\$timestamp=$timestamp=" -e "s=\$message=$message=" $TEMPLATE
 }
 
 function send_message()
 {
 	get_message
-	format_message | ncat $server $channel
+	format_message | fold -w 50 | ncat $server $channel
 	#TODO Handle error exit code, and inform user e.g: server inaccesible
-	sleep 0.2
 }
