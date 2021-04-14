@@ -1,2 +1,3 @@
 #!/bin/sh
-ncat -l -k 5213
+source ./CONFIG
+ssh $USER@$SERVER 'ncat -l -k 5213'

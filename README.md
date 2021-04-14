@@ -25,3 +25,11 @@ Steps:
 * run cdmchat
 * enter, username, ip, and port
 * enjoy the bantz
+
+
+
+# TODO
+
+create config file that is created automatically
+e.g: uname
+
