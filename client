@@ -1,0 +1,18 @@
+#!/bin/zsh
+
+source modules/menu.sh
+source modules/message.sh
+
+function main_loop()
+{
+	while true;
+	do
+
+		send_message
+		main_menu
+	done
+}
+
+
+first_run
+main_loop

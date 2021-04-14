@@ -1,0 +1,9 @@
+#!/bin/sh
+
+split_it(){
+	tmux split-window -v './client'
+}
+tmux new-session -d './server'
+split_it
+tmux attach-session -t 0
+
