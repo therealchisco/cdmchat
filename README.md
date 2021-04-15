@@ -13,7 +13,7 @@ Reqs:
 
 Steps:
 
-### Server Sidea (proper script coming soon)
+### Server Side (proper script coming soon)
 
 * Create a directory that all your boys should have access to
 * cd into it and ```touch chat_log```
