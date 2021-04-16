@@ -7,7 +7,7 @@
 
 ## Steps
 
-1. **Create the key pair** : ```openssl genpkey -out privkey.pem -algorithm rsa 2048``` : create rsa key pair. File name "privkey.pem" is arbitrary, Privacy Enhanced Mail (PEM) is a customary extension (size can be 2049 or 4096)
+1. **Create the key pair** : ```openssl genpkey -out privkey.pem -algorithm rsa 2048``` : create rsa key pair. File name "privkey.pem" is arbitrary, Privacy Enhanced Mail (PEM) is a customary extension (size can be 2048 or 4096)
 
 2. **Extract the public key from the key pair** : ```openssl rsa -in privkey.pem -outform PEM -pubout -out pubkey.pem``` : extract the public key from the privkey.pem key pair file and store it in pubkey.pem
 
