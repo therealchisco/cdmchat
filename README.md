@@ -26,10 +26,12 @@ Steps:
 * enter, username, ip, and port
 * enjoy the bantz
 
-
+# Message authentication
+* Branch _crypto_ is used as a playground to create an asymmetric cryptography message authentication system for the cdmchat system. 
+	* The crypto playground can be found inside the *messageAuthentication* folder
 
 # TODO
 
-create config file that is created automatically
-e.g: uname
+* [ ] create config file that is created automatically, e.g: uname to check OS
+
 
