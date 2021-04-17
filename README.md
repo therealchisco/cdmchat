@@ -33,5 +33,5 @@ Steps:
 # TODO
 
 * [ ] create config file that is created automatically, e.g: uname to check OS
-
+* [ ] How to properly use flags (etlsp) digsignature correct file
 
