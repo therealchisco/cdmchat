@@ -1,0 +1,10 @@
+SERVER:
+masterConfig
+
+path para guardar keys
+
+CLIENT:
+- generate keys
+- scp de masterConfig
+- source de masterConfig
+- scp enviar al SERVER las keys
