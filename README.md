@@ -7,7 +7,7 @@
 Reqs:
 
 * figlet
-* netcat
+* ncat (preferrably with ssl, so install nmap)
 * tput
 * tmux (not necesarry but recommended) 
 
