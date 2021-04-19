@@ -9,6 +9,7 @@
 declare terminal_width
 declare terminal_height
 
+# $(tput cols) => Print the number of columns for the current terminal
 terminal_width=$(tput cols)
 
 #=============================================================================#
@@ -20,6 +21,10 @@ function printf_n()
 {
 	for i in {1..$1};
 	do
+		# Understanding ${@:2} see:
+		# https://unix.stackexchange.com/questions/92978/what-does-this-2-mean-in-shell-scripting
+		# Print all inputs to function starting from the second input (since the first input equals
+		# n the amount of repetitions of the print funcion)
 		printf ${@:2}
 	done
 }
@@ -30,6 +35,7 @@ function reload_cli()
 	# We get the "window" size
 	terminal_width=$(tput cols)
 	terminal_height=$(tput lines)
+	# https://linux.die.net/man/1/tput
 }
 
 
@@ -40,7 +46,8 @@ function print_newline()
 
 function print_separation()
 {
-	#terminal_with the number of "="s
+	# print "="s for all the terminal_width
+	# use the previously described function printf_n (see above)
 	printf_n $terminal_width '='
 	print_newline
 }
