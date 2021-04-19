@@ -92,7 +92,7 @@ function validate_channel()
 
 function detail_menu()
 {
-	indent_text "unsername: "
+	indent_text "username: "
 	printf "$username"
 	print_newline
 	indent_text "server: "
