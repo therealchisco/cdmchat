@@ -39,4 +39,5 @@ function send_message()
 	get_message
 	format_message | fold -w 50 | ncat $server $channel
 	#TODO Handle error exit code, and inform user e.g: server inaccesible
+	# -> possible solution: use -w option for timeout on server connection
 }
