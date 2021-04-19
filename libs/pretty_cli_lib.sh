@@ -52,31 +52,46 @@ function print_separation()
 	print_newline
 }
 
+
 function upper_case()
 {
+   # if number of arguments for function upper_case is greater or equal to 1
    if [ $# -ge 1 ]
    then
+   # CAPITALIZE all letters in the arguments 
      echo $@ | tr '[a-z]' '[A-Z]'
    fi
 }
 
-#centers text in current_width of terminal window cols
+# centers text in current_width of terminal window cols
 function center_text()
 {
+	# text equals arguments of function
 	text=$@
+	
+	# number of characters
 	char_count=$( echo $text | wc -c)
 	cols_rest=$(( $terminal_width - $char_count ))
 	n=$(( $cols_rest / 2 ))
+	
+	# print " " $n-times
 	printf_n $n " "
+	# print the actual text used as an argument for this function
 	echo $text
 }
 
+# prints out upper case centered text by first calculating terminal window's width
 function center_upper()
 {
+	# text equals arguments of function
 	text=$@
+	
+	# number of characters
 	char_count=$( echo $text | wc -c)
 	cols_rest=$(( $terminal_width - $char_count ))
 	n=$(( $cols_rest / 2 ))
+	
+	# print " " $n-times
 	printf_n $n " "
 	upper_case $text
 }
