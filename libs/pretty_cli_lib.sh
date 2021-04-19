@@ -113,7 +113,7 @@ function center_figlet()
 	figlet -w $terminal_width -c $@
 }
 
-
+# Press tab (indent text) before printing function argument
 function indent_text()
 {
 	printf '\t'
@@ -122,7 +122,7 @@ function indent_text()
 
 function print_header()
 {
-	print_separation
+	print_separation # ========
 	center_text $@
 	print_separation
 }
