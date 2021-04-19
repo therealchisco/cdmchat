@@ -101,7 +101,7 @@ function center_upper()
 # this is useful for ascii art assets
 function center_file()
 {
-	File=$1
+	local File=$1
 	cat $File | while read y
 	do
 		center_text $y
