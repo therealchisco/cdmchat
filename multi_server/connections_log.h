@@ -19,7 +19,7 @@ void updateLog(char *argv) {
 	buffer = (char *) ec_malloc(100); 
 
 	strcpy(buffer, argv); // Copy into buffer.
-	printf("[DEBUG] buffer @ %p: \'%s\'\n", buffer, buffer); 
+	//printf("[DEBUG] buffer @ %p: \'%s\'\n", buffer, buffer); 
 	
 	strncat(buffer, "\n", 1); // Add a newline on the end.
 	/* Opening file
