@@ -30,11 +30,11 @@ int main(int argc , char *argv[])
 	//set of socket descriptors
 	fd_set readfds;
 
-    // `time_t` is an arithmetic time type
-    time_t timeLoggingAttempt; // variable to store time of logging attempt
+	// `time_t` is an arithmetic time type
+	time_t timeLoggingAttempt; // variable to store time of logging attempt
 	char * timeLoggingString; // character pointer to store character UTC time representation of logging attempt
 		
-	//a message
+	//Welcome message
 	char *message = "Bienvenidos al Payaserver! \r\n";
 	
 	//initialise all client_socket[] to 0 so not checked
@@ -135,17 +135,24 @@ int main(int argc , char *argv[])
 			time(&timeLoggingAttempt);
 
 			// Convert to UTC time format with ctime() and store as string
-			timeLoggingString =	ctime(&timeLoggingAttempt);
+			timeLoggingString = ctime(&timeLoggingAttempt);
 
-			char * message = "Connection attempt from IP: "; 
+			char * log_info;
+			// allocate enough memory to write data - this was causing a segfault, when trying to use strcat
+			log_info = malloc(150); 
+			strcpy(log_info,"Connection attempt from IP: "); 
+			// store IP in ipAddress
 			char * ipAddress = inet_ntoa(address.sin_addr);
-			strncat(message, ipAddress,strlen(ipAddress));
-			strncat(message, " at UTC time: ",14);
-			strncat(message,timeLoggingString,strlen(timeLoggingString));
-			strncat(message, "\n",1); // Add a newline on the end
+			//strcat(ipAddress, "\0");
+			strcat(log_info, ipAddress);
+
+			strncat(log_info, " at UTC time: ",14);
+			strncat(log_info,timeLoggingString,strlen(timeLoggingString));
+			//strncat(log_info, "\n",1); // Add a newline on the end
+		
 			// write IP address of new connection in connections log
-			updateLog(message);			
-			
+			updateLog(log_info);			
+		     	free(log_info);	
 			//send new connection greeting message
 			if( send(new_socket, message, strlen(message), 0) != strlen(message) )
 			{
