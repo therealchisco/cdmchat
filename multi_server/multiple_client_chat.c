@@ -147,7 +147,11 @@ int main(int argc , char *argv[])
 			strcat(log_info, ipAddress);
 
 			strncat(log_info, " at UTC time: ",14);
-			strncat(log_info,timeLoggingString,strlen(timeLoggingString));
+			/* IMPORTANT: by reducing the strlen by 1 of the string being concatenated
+			we are therefore not copying an extra 'new line' character `\n` therefore
+			avoiding to have one extra unnecesarry new-line
+			*/
+			strncat(log_info,timeLoggingString,strlen(timeLoggingString)-1);
 			//strncat(log_info, "\n",1); // Add a newline on the end
 		
 			// write IP address of new connection in connections log
