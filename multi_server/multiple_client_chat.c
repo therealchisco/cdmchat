@@ -10,6 +10,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros
+#include <time.h> // Library to print time of logging attempt
 #include "connections_log.h"
 	
 #define TRUE 1
@@ -28,6 +29,10 @@ int main(int argc , char *argv[])
 		
 	//set of socket descriptors
 	fd_set readfds;
+
+    // `time_t` is an arithmetic time type
+    time_t timeLoggingAttempt; // variable to store time of logging attempt
+	char * timeLoggingString; // character pointer to store character UTC time representation of logging attempt
 		
 	//a message
 	char *message = "Bienvenidos al Payaserver! \r\n";
@@ -123,9 +128,24 @@ int main(int argc , char *argv[])
 			}
 			
 			//inform user of socket number - used in send and receive commands
-			printf("New connection , socket fd is %d , ip is : %s , port : %d\n" , new_socket , inet_ntoa(address.sin_addr) , ntohs(address.sin_port));
+			printf("New connection , socket fd is %d , IP is : %s , port : %d\n" , new_socket , inet_ntoa(address.sin_addr) , ntohs(address.sin_port));
+
+			// Obtain current time
+			// `time()` returns the current time of the system as a `time_t` value
+			time(&timeLoggingAttempt);
+
+			// Convert to UTC time format with ctime() and store as string
+			timeLoggingString =	ctime(&timeLoggingAttempt);
+
+			char * message = "Connection attempt from IP: "; 
+			char * ipAddress = inet_ntoa(address.sin_addr);
+			strncat(message, ipAddress,strlen(ipAddress));
+			strncat(message, " at UTC time: ",14);
+			strncat(message,timeLoggingString,strlen(timeLoggingString));
+			strncat(message, "\n",1); // Add a newline on the end
 			// write IP address of new connection in connections log
-			updateLog(inet_ntoa(address.sin_addr));			
+			updateLog(message);			
+			
 			//send new connection greeting message
 			if( send(new_socket, message, strlen(message), 0) != strlen(message) )
 			{
