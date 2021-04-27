@@ -1,7 +1,7 @@
 //Example code: A simple server side code, which echos back the received message.
 //Handle multiple socket connections with select and fd_set on Linux
 #include <stdio.h>
-#include <string.h> //strlen
+#include <string.h> //strlen, strcpy and strcat
 #include <stdlib.h>
 #include <errno.h>
 #include <unistd.h> //close
@@ -37,8 +37,8 @@ int main(int argc , char *argv[])
 	time_t timeLoggingAttempt; // variable to store time of logging attempt
 	char * timeLoggingString; // character pointer to store character UTC time representation of logging attempt
 		
-	//Welcome message
-	char *message = "Bienvenidos al Payaserver! \r\n";
+	//Welcome message shown at client when establishin a connection with the server
+	const char *message = "Bienvenidos al Payaserver! \r\n";
 	
 	//initialise all client_socket[] to 0 so not checked
 	for (int i = 0; i < MAX_CLIENTS; i++)
@@ -149,7 +149,7 @@ int main(int argc , char *argv[])
 			//strcat(ipAddress, "\0");
 			strcat(log_info, ipAddress);
 
-			strncat(log_info, " at UTC time: ",14);
+			strncat(log_info, " at UTC time: ",15);
 			/* IMPORTANT: by reducing the strlen by 1 of the string being concatenated
 			we are therefore not copying an extra 'new line' character `\n` therefore
 			avoiding to have one extra unnecesarry new-line

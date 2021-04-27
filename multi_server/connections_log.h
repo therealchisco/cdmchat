@@ -21,7 +21,7 @@ void updateLog(char *argv) {
 	strcpy(buffer, argv); // Copy into buffer.
 	//printf("[DEBUG] buffer @ %p: \'%s\'\n", buffer, buffer); 
 	
-	strncat(buffer, "\n", 1); // Add a newline on the end.
+	strncat(buffer, "\n", 2); // Add a newline at the end.
 	/* Opening file
 	 Flags:
 	 * O_WRONGLY flag for write-only access
