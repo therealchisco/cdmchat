@@ -65,7 +65,7 @@ int main(int argc , char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	
-	//set master socket to allow multiple connections ,
+	//set master socket to allow multiple connections,
 	//this is just a good habit, it will work without this
 	if( setsockopt(master_socket, SOL_SOCKET, SO_REUSEADDR, (char *)&opt,
 		sizeof(opt)) < 0 )
@@ -76,7 +76,7 @@ int main(int argc , char *argv[])
 	
 	/* define type of socket created, use this information later to bind the socket:
 	- AF_INET: IPv4 family
-	- INADDR_ANY: own IP address
+	- INADDR_ANY: bind to Any Incomming IP Address
 	- htons( PORT) : translate PORT number to format desired by the library
 	*/
 	address.sin_family = AF_INET;
