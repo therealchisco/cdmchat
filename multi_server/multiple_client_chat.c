@@ -17,13 +17,14 @@
 #define FALSE 0
 // Port in which the server will interact with the clients
 #define PORT 8888
+// Max amount of clients handled by server
+#define MAX_CLIENTS 30
 	
 int main(int argc , char *argv[])
 {
 	int opt = TRUE;
 	int master_socket , addrlen , new_socket , client_socket[30] ,
-		activity, i , valread , sd, sd2;
-	int max_clients = 30; // max amount of clients handled by server
+		activity, valread , sd, sd2;
 	int max_sd;
 	struct sockaddr_in address;
 		
@@ -40,7 +41,7 @@ int main(int argc , char *argv[])
 	char *message = "Bienvenidos al Payaserver! \r\n";
 	
 	//initialise all client_socket[] to 0 so not checked
-	for (i = 0; i < max_clients; i++)
+	for (int i = 0; i < MAX_CLIENTS; i++)
 	{
 		client_socket[i] = 0;
 	}
@@ -95,7 +96,7 @@ int main(int argc , char *argv[])
 		max_sd = master_socket;
 			
 		//add child sockets to set
-		for ( i = 0 ; i < max_clients ; i++)
+		for (int i = 0 ; i < MAX_CLIENTS ; i++)
 		{
 			//socket descriptor
 			sd = client_socket[i];
@@ -168,7 +169,7 @@ int main(int argc , char *argv[])
 			puts("Welcome message sent successfully");
 				
 			//add new socket to array of sockets
-			for (i = 0; i < max_clients; i++)
+			for (int i = 0; i < MAX_CLIENTS; i++)
 			{
 				//if position is empty
 				if( client_socket[i] == 0 )
@@ -182,7 +183,7 @@ int main(int argc , char *argv[])
 		}
 			
 		//else its some IO operation on some other socket
-		for (i = 0; i < max_clients; i++)
+		for (int i = 0; i < MAX_CLIENTS; i++)
 		{
 			sd = client_socket[i];
 				
