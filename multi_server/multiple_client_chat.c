@@ -15,13 +15,15 @@
 	
 #define TRUE 1
 #define FALSE 0
+// Port in which the server will interact with the clients
 #define PORT 8888
 	
 int main(int argc , char *argv[])
 {
 	int opt = TRUE;
 	int master_socket , addrlen , new_socket , client_socket[30] ,
-		max_clients = 30 , activity, i , valread , sd, sd2;
+		activity, i , valread , sd, sd2;
+	int max_clients = 30; // max amount of clients handled by server
 	int max_sd;
 	struct sockaddr_in address;
 		
