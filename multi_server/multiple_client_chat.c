@@ -23,9 +23,15 @@
 int main(int argc , char *argv[])
 {
 	int opt = TRUE;
-	int master_socket , addrlen , new_socket , client_socket[30] ,
-		activity, valread , sd, sd2;
+	/* similar to a file descriptor, an initialized socket will get an integer number assigned to describe 
+	the socket being initialized.
+	- master_socket: describes the socket used by the server to capture all incoming connection requests
+	*/ 
+	int master_socket , new_socket , client_socket[MAX_CLIENTS]; 
+
+	int addrlen, activity, valread , sd, sd2;
 	int max_sd;
+
 	struct sockaddr_in address;
 		
 	char buffer[1025]; //data buffer of 1K
@@ -37,19 +43,25 @@ int main(int argc , char *argv[])
 	time_t timeLoggingAttempt; // variable to store time of logging attempt
 	char * timeLoggingString; // character pointer to store character UTC time representation of logging attempt
 		
-	//Welcome message shown at client when establishin a connection with the server
+	//Welcome message shown at client when establishing a connection with the server
 	const char *message = "Bienvenidos al Payaserver! \r\n";
 	
-	//initialise all client_socket[] to 0 so not checked
+	/* initialise all client_socket[] to 0, as a file descriptor, sockets are identified by an integer, all sockets 
+	initialized as 0 are disconnected sockets
+	*/
 	for (int i = 0; i < MAX_CLIENTS; i++)
 	{
 		client_socket[i] = 0;
 	}
 		
-	//create a master socket
+	/* create a master socket for the server to check on possible incomming connections
+	AF_INET stands for IPv4, SOCK_STREAM stands for the kind of stream data transport as in TCP
+	(UDP in the other hand is not a socket stream), and the last parameter is always a 0 for the protocol
+	*/
 	if( (master_socket = socket(AF_INET , SOCK_STREAM , 0)) == 0)
 	{
-		perror("socket failed");
+		/* if initializing the master socket in the server fails, exit the program and print error to strerr */
+		perror("Initializing the server's master socket failed");
 		exit(EXIT_FAILURE);
 	}
 	
@@ -62,18 +74,25 @@ int main(int argc , char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	
-	//type of socket created
+	/* define type of socket created, use this information later to bind the socket:
+	- AF_INET: IPv4 family
+	- INADDR_ANY: own IP address
+	- htons( PORT) : translate PORT number to format desired by the library
+	*/
 	address.sin_family = AF_INET;
 	address.sin_addr.s_addr = INADDR_ANY;
 	address.sin_port = htons( PORT );
 		
-	//bind the socket to localhost port 8888
+	/* Bind is define as 'attaching a socket to a local address' 
+	Bind the socket to own IP adress port 8888
+	- the second parameter must be a pointer to a sockaddr struct, so 
+	*/
 	if (bind(master_socket, (struct sockaddr *)&address, sizeof(address))<0)
 	{
 		perror("bind failed");
 		exit(EXIT_FAILURE);
 	}
-	printf("Listener on port %d \n", PORT);
+	printf("Listening on port %d \n", PORT);
 		
 	//try to specify maximum of 3 pending connections for the master socket
 	if (listen(master_socket, 3) < 0)
