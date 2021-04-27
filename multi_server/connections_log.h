@@ -7,7 +7,7 @@
 #include <sys/stat.h> /* this header defines the flags for the File Permissions of a 
 newly created file with the open() function, when using the O_CREAT flag*/
 
-#define LOG_FILE "./connection_log" // path for connection log file
+#define LOG_FILE "./log_attempted_connections" // path for connection log file
 
 void fatal(char *); // A function for fatal errors
 
