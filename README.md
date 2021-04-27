@@ -18,7 +18,7 @@ Steps:
 * Create a directory that all your boys should have access to
 * cd into it and ```touch chat_log```
 * Select a port (channel) e.g: 5213
-* run ```ncat -l -k 5213 >> chat_log &``` 
+* ~~run ```ncat -l -k 5213 >> chat_log &```~~
 
 ### Client Side
 * clone repo 
