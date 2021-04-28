@@ -11,7 +11,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros
+#include <sys/time.h> //FD_SET, FD_ISSET, FD_ZERO macros, in order to use the select() function [check `man select` for way more information]
 #include <time.h> // Library to print time of logging attempt
 #include "connections_log.h"
 	
@@ -38,7 +38,8 @@ int main(int argc , char *argv[])
 		
 	char buffer[1025]; //data buffer of 1K
 		
-	//set of socket descriptors
+	/* set of socket descriptors
+	*/
 	fd_set readfds;
 
 	// `time_t` is an arithmetic time type
