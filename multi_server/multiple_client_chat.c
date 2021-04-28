@@ -25,9 +25,9 @@ int main(int argc , char *argv[])
 	int opt = TRUE;
 	/* similar to a file descriptor, an initialized socket will get an integer number assigned to describe 
 	the socket being initialized.
-	- master_socket: describes the socket used by the server to capture all incoming connection requests
+	- server_master_socket: describes the socket used by the server to capture all incoming connection requests
 	*/ 
-	int master_socket , new_socket , client_socket[MAX_CLIENTS]; 
+	int server_master_socket , new_socket , client_socket[MAX_CLIENTS]; 
 
 	int addrlen, activity, valread , sd, sd2;
 	int max_sd;
@@ -58,7 +58,7 @@ int main(int argc , char *argv[])
 	AF_INET stands for IPv4, SOCK_STREAM stands for the kind of stream data transport as in TCP
 	(UDP in the other hand is not a socket stream), and the last parameter is always a 0 for the protocol
 	*/
-	if( (master_socket = socket(AF_INET , SOCK_STREAM , 0)) == 0)
+	if( (server_master_socket = socket(AF_INET , SOCK_STREAM , 0)) == 0)
 	{
 		/* if initializing the master socket in the server fails, exit the program and print error to strerr */
 		perror("Initializing the server's master socket failed");
@@ -67,7 +67,7 @@ int main(int argc , char *argv[])
 	
 	//set master socket to allow multiple connections,
 	//this is just a good habit, it will work without this
-	if( setsockopt(master_socket, SOL_SOCKET, SO_REUSEADDR, (char *)&opt,
+	if( setsockopt(server_master_socket, SOL_SOCKET, SO_REUSEADDR, (char *)&opt,
 		sizeof(opt)) < 0 )
 	{
 		perror("setsockopt");
@@ -87,15 +87,15 @@ int main(int argc , char *argv[])
 	Bind the socket to own IP adress port 8888
 	- the second parameter must be a pointer to a sockaddr struct, so 
 	*/
-	if (bind(master_socket, (struct sockaddr *)&address, sizeof(address))<0)
+	if (bind(server_master_socket, (struct sockaddr *)&address, sizeof(address))<0)
 	{
 		perror("bind failed");
 		exit(EXIT_FAILURE);
 	}
-	printf("Listening on port %d \n", PORT);
+	printf("Listening on port %d for any IP addresses.\n", PORT);
 		
 	//try to specify maximum of 3 pending connections for the master socket
-	if (listen(master_socket, 3) < 0)
+	if (listen(server_master_socket, 3) < 0)
 	{
 		perror("listen");
 		exit(EXIT_FAILURE);
@@ -111,8 +111,8 @@ int main(int argc , char *argv[])
 		FD_ZERO(&readfds);
 	
 		//add master socket to set
-		FD_SET(master_socket, &readfds);
-		max_sd = master_socket;
+		FD_SET(server_master_socket, &readfds);
+		max_sd = server_master_socket;
 			
 		//add child sockets to set
 		for (int i = 0 ; i < MAX_CLIENTS ; i++)
@@ -140,9 +140,9 @@ int main(int argc , char *argv[])
 			
 		//If something happened on the master socket ,
 		//then its an incoming connection
-		if (FD_ISSET(master_socket, &readfds))
+		if (FD_ISSET(server_master_socket, &readfds))
 		{
-			if ((new_socket = accept(master_socket,
+			if ((new_socket = accept(server_master_socket,
 					(struct sockaddr *)&address, (socklen_t*)&addrlen))<0)
 			{
 				perror("accept");
