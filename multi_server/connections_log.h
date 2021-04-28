@@ -14,11 +14,12 @@ void fatal(char *); // A function for fatal errors
 void *ec_malloc(unsigned int); // An error-checked malloc() wrapper
 
 void updateLog(char *argv) { 
-	int fd; // file descriptor for notes file
+	int fd; // file descriptor for notes file, fd stands for fd
 	char *buffer;
 	buffer = (char *) ec_malloc(100); 
 
 	strcpy(buffer, argv); // Copy into buffer.
+	
 	//printf("[DEBUG] buffer @ %p: \'%s\'\n", buffer, buffer); 
 	
 	strncat(buffer, "\n", 2); // Add a newline at the end.
@@ -34,20 +35,22 @@ void updateLog(char *argv) {
 	*/
 	fd = open(LOG_FILE, O_WRONLY|O_CREAT|O_APPEND, S_IRUSR|S_IWUSR); 
 	if(fd == -1) /* if opening file */
-		fatal("in main() while opening file"); 
-	printf("[DEBUG] file descriptor is %d\n", fd);
+		fatal("in updateLog() while opening connections log file"); 
+	
+	//printf("[DEBUG] file descriptor is %d\n", fd);
+	
 	/* Writing data 
 	 use strlen() to calculate the length of a string
 	 write() function needs to know which file descriptor to use, what string to store, and how long the string is
 	 how many bytes to write
 	*/
 	if(write(fd,buffer, strlen(buffer)) == -1) 
-		fatal("in main() while writing buffer to file.");
+		fatal("in updateLog() while writing buffer into connections log.");
 	// Closing file 
 	if(close(fd) == -1) 
-		fatal("in main() while closing file.");
+		fatal("in updateLog() while closing connections log.");
 
-	printf("Note has been saved.\n");
+	printf("Connections log has been updated. \n");
 	free(buffer); 
 }
 
