@@ -1,5 +1,7 @@
 //Example code: A simple server side code, which echos back the received message.
 //Handle multiple socket connections with select and fd_set on Linux
+//Originally taken from https://www.geeksforgeeks.org/socket-programming-in-cc-handling-multiple-clients-on-server-without-multi-threading/?ref=rp
+//but modified and adapted
 #include <stdio.h>
 #include <string.h> //strlen, strcpy and strcat
 #include <stdlib.h>
