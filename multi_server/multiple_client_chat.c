@@ -140,14 +140,14 @@ int main(int argc , char *argv[])
 			printf("select error");
 		}
 			
-		//If something happened on the master socket ,
+		//If something happened on the master socket,
 		//then its an incoming connection
 		if (FD_ISSET(server_master_socket, &readfds))
 		{
 			if ((new_socket = accept(server_master_socket,
 					(struct sockaddr *)&address, (socklen_t*)&addrlen))<0)
 			{
-				perror("accept");
+				perror("Error accepting connection with new client");
 				exit(EXIT_FAILURE);
 			}
 			
@@ -217,7 +217,7 @@ int main(int argc , char *argv[])
 					//Somebody disconnected , get his details and print
 					getpeername(sd , (struct sockaddr*)&address , \
 						(socklen_t*)&addrlen);
-					printf("Host disconnected , ip %s , port %d \n" ,
+					printf("Client disconnected at IP %s and port %d \n" ,
 						inet_ntoa(address.sin_addr) , ntohs(address.sin_port));
 						
 					//Close the socket and mark as 0 in list for reuse
