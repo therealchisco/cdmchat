@@ -1,12 +1,8 @@
 # Message authentication with OpenSSL
-A quick summary of general OpenSSL commands we have found useful, a step by step guide to create a digital signature using RSA and useful links about using OpenSSL.
+A quick summary of general OpenSSL commands we have found useful, a step by step guide to create a [digital signature](https://en.wikipedia.org/wiki/Digital_signature) using RSA and interesting links.
 
-## General OpenSSL commands
-
-* ```openssl genrsa``` : generate RSA private key, and output key to stdout
-* ```openssl dgst -sha256 file``` : generate the SHA256 hash of the contents of `file`
-
-## Digital signature with RSA and SHA256
+## Digital signature with RSA and SHA-256
+The following text presents a step by step guide to create a digital signature of a file using an RSA key pair. The SHA-256 output of the file is being signed with the RSA private key. In this particular implementation a client is signing all messages it sends to a server, which then verifies its authenticity and integrity with the following method.
 
 ### Client side
 1. **Create a key pair** : ```openssl genpkey -out privkey.pem -algorithm rsa 2048``` 
@@ -16,7 +12,7 @@ Create an RSA key pair stored in file `privkey.pem` (file name is arbitrary). Pr
 Extract the public key from the `privkey.pem` key pair file and store it in `pubkey.pem`. The public key file `pubkey.pem` can be shared with other systems.
 
 3. **Sign a file with the private key** : ```openssl dgst -sha256 -sign privkey.pem -out sign.sha256 file```
-Use the private key to sign the SHA256 output of a file (the output is a **binary**)
+Use the private key to sign the SHA-256 output of a file (the output is a **binary**)
 	- In order to translate the output to **base64** use the following command ```openssl enc -base64 -in sign.sha256 -out sign.sha256.base64```
 
 ### Server side
@@ -24,5 +20,9 @@ Use the private key to sign the SHA256 output of a file (the output is a **binar
 Verify the authenticity of a file using a public key
 	- If the signature is in base64, first translate it to a binary with the command ```openssl enc -base64 -d -in sign.sha256.base64 -out sign.sha256```
 
-## Helpful links
+## General OpenSSL commands
+* ```openssl genrsa``` : generate RSA private key, and output key to stdout
+* ```openssl dgst -sha256 file``` : generate the SHA256 hash of the contents of `file`
+
+## Links (more information)
 * Overview about [Digital signatures](https://opensource.com/article/19/6/cryptography-basics-openssl-part-2)
