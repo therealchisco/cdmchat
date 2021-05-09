@@ -10,7 +10,7 @@ A quick summary of general OpenSSL commands we have found useful, a step by step
 
 ### Client side
 1. **Create a key pair** : ```openssl genpkey -out privkey.pem -algorithm rsa 2048``` 
-Create an RSA key pair stored in file `privkey.pem` (file name is arbitrary). Privacy Enhanced Mail (PEM) is a customary extension. Size of RSA key can be 2048 or 4096 bits. **IMPORTANT: NEVER EVER share the file `privkey.pem`, since it contains your private key. It should be stored locally in a safe manner!!**
+Create an RSA key pair stored in file `privkey.pem` (file name is arbitrary). Privacy Enhanced Mail (PEM) is a customary extension. Size of RSA key can be 2048 or 4096 bits. **IMPORTANT: NEVER EVER share the file** `privkey.pem`**, since it contains your private key. It should be stored locally in a safe manner!!**
 
 2. **Extract the public key from the key pair** : ```openssl rsa -in privkey.pem -outform PEM -pubout -out pubkey.pem``` 
 Extract the public key from the `privkey.pem` key pair file and store it in `pubkey.pem`. The public key file `pubkey.pem` can be shared with other systems.
