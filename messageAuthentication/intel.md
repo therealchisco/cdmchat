@@ -1,15 +1,15 @@
-# Intel about message authentication
+# Message authentication with OpenSSL
 
-## OpenSSL
+## General OpenSSL commands
 
 * ```openssl genrsa``` : generate RSA private key, and output key to stdout
-* ```openssl dgst -sha256 file``` : generate the SHA256 hash of the contents of file
+* ```openssl dgst -sha256 file``` : generate the SHA256 hash of the contents of `file`
 
 ## Steps
 
-1. **Create the key pair** : ```openssl genpkey -out privkey.pem -algorithm rsa 2048``` : create rsa key pair. File name "privkey.pem" is arbitrary, Privacy Enhanced Mail (PEM) is a customary extension (size can be 2048 or 4096)
+1. **Create the key pair** : ```openssl genpkey -out privkey.pem -algorithm rsa 2048``` : create rsa key pair. File name `privkey.pem` is arbitrary, Privacy Enhanced Mail (PEM) is a customary extension (size of RSA key can be 2048 or 4096). **IMPORTANT: NEVER EVER share the file `privkey.pem`, it should be stored locally in a safe manner!!**
 
-2. **Extract the public key from the key pair** : ```openssl rsa -in privkey.pem -outform PEM -pubout -out pubkey.pem``` : extract the public key from the privkey.pem key pair file and store it in pubkey.pem
+2. **Extract the public key from the key pair** : ```openssl rsa -in privkey.pem -outform PEM -pubout -out pubkey.pem``` : extract the public key from the `privkey.pem` key pair file and store it in `pubkey.pem`. The public key file `pubkey.pem` can be shared with other systems.
 
 3. **Sign the file with the private key** : ```openssl dgst -sha256 -sign privkey.pem -out sign.sha256 file``` : use the private key to sign the SHA256 output of a file (the output is a binary) - client side
 	- In order to translate the output to base64 use the following command ```openssl enc -base64 -in sign.sha256 -out sign.sha256.base64```
